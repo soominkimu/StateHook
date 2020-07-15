@@ -10,23 +10,23 @@ import {
 
 import ThemedButton from './ThemedButton';
 
+const reducer: TReducer<IState, TAction> = (state, action) => {
+  switch (action.type) {
+    case 'changeTheme':
+      console.log(action.payload);
+      return {
+        ...state,
+        theme: action.payload
+      };
+    default:
+      return state;
+  }
+}
+
 function App() {
   const initState = {
     theme: { primary: 'blue' }
   };
-
-  const reducer: TReducer<IState, TAction> = (state, action) => {
-    switch (action.type) {
-      case 'changeTheme':
-        console.log(action.payload);
-        return {
-          ...state,
-          theme: action.payload
-        };
-      default:
-        return state;
-    }
-  }
 
   return (
     <div className="App">

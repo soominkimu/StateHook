@@ -15,7 +15,6 @@ export interface IState {
 }
 export type TAction =
   | { type: 'changeTheme', payload: { primary: string } };
-//----------------------------------------------------------------------
 
 //----------------------------------------------------------------------
 // State Context: state and dispatch
@@ -27,6 +26,8 @@ export const StateContext = React.createContext<TStateContext | null>(null);
 //----------------------------------------------------------------------
 // Context Provider: reducer and the initial state should be provided
 // const reducer: TReducer<IState, TAction> = (state, action) => {...
+// * Reducer should be defined outside of the function block that has
+//  useReducer, otherwise reducer is called twice per dispatch.
 //----------------------------------------------------------------------
 export type TReducer<S, A> = (prevState: S, action: A) => S;
 export const StateProvider = (props: {
