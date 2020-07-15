@@ -7,18 +7,28 @@
 =============================================================================*/
 import React from 'react';
 
+//----------------------------------------------------------------------
+// State and Action definition
+//----------------------------------------------------------------------
 export interface IState {
   theme: { primary: string };
 }
-
 export type TAction =
   | { type: 'changeTheme', payload: { primary: string } };
+//----------------------------------------------------------------------
 
-export type TReducer<S, A> = (prevState: S, action: A) => S;
+//----------------------------------------------------------------------
+// State Context: state and dispatch
+//----------------------------------------------------------------------
 export type TDispatch = (action: TAction) => void;
 export type TStateContext = [IState, TDispatch];
 export const StateContext = React.createContext<TStateContext | null>(null);
 
+//----------------------------------------------------------------------
+// Context Provider: reducer and the initial state should be provided
+// const reducer: TReducer<IState, TAction> = (state, action) => {...
+//----------------------------------------------------------------------
+export type TReducer<S, A> = (prevState: S, action: A) => S;
 export const StateProvider = (props: {
   reducer:   TReducer<IState, TAction>,
   initState: IState,
@@ -27,4 +37,8 @@ export const StateProvider = (props: {
     {props.children}
   </StateContext.Provider>;
 
-export const useStateValue = () => React.useContext(StateContext);  // custom hook
+//----------------------------------------------------------------------
+// Context Consumer: custom hook, state and dispath will be accessible
+// const [state, dispath] = useStateValue() as TStateContext;
+//----------------------------------------------------------------------
+export const useStateValue = () => React.useContext(StateContext);
