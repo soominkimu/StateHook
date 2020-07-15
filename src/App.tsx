@@ -4,28 +4,11 @@ import './App.scss';
 import {
   IState,
   TAction,
-  TStateContext,
   TReducer,
-  StateProvider,
-  useStateValue
+  StateProvider
 } from './store/state';
 
-const ThemedButton = () => {
-  const [{ theme }, dispatch] = useStateValue() as TStateContext;
-
-  return (
-    <button
-      type="button"
-      style={{color: theme.primary}}
-      onClick={() => dispatch({
-        type: 'changeTheme',
-        payload: { primary: 'red' }
-      })}
-    >
-      Make me red!
-    </button>
-  );
-}
+import ThemedButton from './ThemedButton';
 
 function App() {
   const initState = {
@@ -35,7 +18,7 @@ function App() {
   const reducer: TReducer<IState, TAction> = (state, action) => {
     switch (action.type) {
       case 'changeTheme':
-        console.log(state);
+        console.log(action.payload);
         return {
           ...state,
           theme: action.payload
@@ -48,7 +31,9 @@ function App() {
   return (
     <div className="App">
       <StateProvider initState={initState} reducer={reducer}>
-        <ThemedButton />
+        <ThemedButton color="red" />
+        <ThemedButton color="cyan" />
+        <ThemedButton color="magenta" />
       </StateProvider>
     </div>
   );
